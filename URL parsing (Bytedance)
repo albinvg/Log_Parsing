@@ -1,0 +1,22 @@
+# Given a list of URLs, sensitive hosts, and sensitive parameters, please find out all the URLs that
+# under sensitive second level domain that have sensitive parameters.
+
+# Example:
+sensitiveParameters = ["username", "password", "pin"]
+SLDs = ["foo", "bar"]  # Second Level Domain
+URLs = [
+    "https://www.didi.com/test/test1?username=abc&password=12345",
+    "https://api.foo.com/test/test1?username=abc&password=12345",  # Target
+    "https://bar.com/test/test1?sender=abc",
+    "https://test.bar.com/test/test1?username=abc",  # Target
+    "https://www.abcbar.com/test/test1?username=abc&password=12345",
+    "https://bar.test.com/test/test1?username=abc",  # Target
+    "https://test.bar.com/test/test1?username%3Dabc",
+]
+
+"""
+Albin's interpretation of question:
+-> find URLs that have any items from SDLs list in the second level domain (correct = bar.com) (wrong = bar.abc.com)
+-> in that, find the corresponding URLs that have any of the "sensitiveParameters"
+-> retrieve a list of 1) URL 2) sesitive parameter + value (eg; ["https://test.bar.com/test/test1?username=abc", "username=abc"])
+"""
